@@ -8,25 +8,22 @@
 
 #include "glut.h"
 
-#define INF 10000 // use to extend a point and check if it's inside a polygon
-
 struct Point
 {
 	int _x;
 	int _y;
 	int _id;
 
-	Point(int x, int y, int id) : _x(x), _y(y), _id(id) {};
+	Point(const int x, const int y) : _x(x), _y(y) {};
+	Point(const int x, const int y, const int id) : _x(x), _y(y), _id(id) {};
 };
 
 class Polygon {
 
 	std::vector<Point> points;
 
-	bool onSegment(Point p, Point q, Point r);
-	int orientation(Point p, Point q, Point r);
-	bool doIntersect(Point p1, Point q1, Point p2, Point q2);
-	bool pointIsInsidePolygon(const Point point);
+	int getOrientation() const;
+	std::vector<Point> getNormals() const;
 	bool nearPointFromSamePolygon(Point* point);
 
 public:

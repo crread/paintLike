@@ -22,83 +22,65 @@ bool Polygon::pointIsEmpty() const
 	return points.empty();
 }
 
-bool Polygon::onSegment(Point p, Point q, Point r)
+int Polygon::getOrientation() const 
 {
-	if (q._x <= std::max(p._x, r._x) && q._x >= std::min(p._x, r._x) &&
-		q._y <= std::max(p._y, r._y) && q._y >= std::min(p._y, r._y))
-		return true;
-	return false;
-}
+	auto pointsSize = points.size();
+	int orientation = 0;
+	int i = 0;	
 
-int Polygon::orientation(Point p, Point q, Point r)
-{
-	int val = (q._y - p._y) * (r._x - q._x) - (q._x - p._x) * (r._y - q._y);
-
-	if (val == 0) return 0; // collinear 
-	return (val > 0) ? 1 : 2; // clock or counterclock wise 
-}
-
-bool Polygon::doIntersect(Point p1, Point q1, Point p2, Point q2)
-{
-	int o1 = orientation(p1, q1, p2);
-	int o2 = orientation(p1, q1, q2);
-	int o3 = orientation(p2, q2, p1);
-	int o4 = orientation(p2, q2, q1);
-
-	if (o1 != o2 && o3 != o4)
-		return true;
-
-	if (o1 == 0 && onSegment(p1, p2, q1)) return true;
-	if (o2 == 0 && onSegment(p1, q2, q1)) return true;
-	if (o3 == 0 && onSegment(p2, p1, q2)) return true;
-	if (o4 == 0 && onSegment(p2, q1, q2)) return true;
-
-	return false;
-}
-
-bool Polygon::pointIsInsidePolygon(const Point point) 
-{
-	Point extreme = Point(INF, point._y, 0);
-
-	int i = 0;
-	int count = 0;
-
-	do
+	do 
 	{
-		int next = (i + 1) % points.size();
-		if (doIntersect(points.at(i), points.at(next), point, extreme))
+
+		if (i >= pointsSize) 
 		{
-			if (orientation(points.at(i), point, points.at(next)) == 0)
-			{
-				std::cout << " ? ? ? ? " << std::endl;
-				return onSegment(points.at(i), point, points.at(next));
-			}
-
-			count++;
-			std::cout << "counter : " << count << " size : " << points.size()  << std::endl;
+			return 0;
 		}
-	} while (i != 0);
 
-	return count&1; // return true if odd
+		orientation = (points.at(pointsSize % i + 1)._x * points.at(pointsSize %  i + 2)._y + points.at(i)._x * points.at(pointsSize % i + 2)._y + points.at(pointsSize % i + 2)._x * points.at(pointsSize % i)._y) - (points.at(pointsSize % i + 1)._x * points.at(i)._y + points.at(pointsSize % i + 2)._x * points.at(pointsSize % i + 1)._y + points.at(i)._x * points.at(pointsSize % i + 2)._y);
+
+		i++;
+
+	} while (orientation == 0);
+
+	// orientation < 0 => clockwise orientation
+	// orientation > 0 => counterclockwise orientation
+
+	return orientation < 0 ? -1 : 1;
+}
+
+std::vector<Point> Polygon::getNormals() const
+{
+	auto pointsSize = points.size();
+	int orientation = this->getOrientation();
+	std::vector<Point> normals;
+
+	if (orientation != 0) {
+
+		for (int i = 0; i < pointsSize; i++)
+		{
+			if (orientation == -1) 
+			{
+				normals.push_back(Point(
+					points.at(pointsSize % i + 1)._y - points.at(i)._y,
+					-1 * (points.at(pointsSize % i + 1)._x - points.at(i)._x)
+				));
+			}
+			else 
+			{
+				normals.push_back(Point(
+					-1 * (points.at(pointsSize % i + 1)._y - points.at(i)._y),
+					points.at(pointsSize % i + 1)._x - points.at(i)._x
+				));
+			}
+		}
+	}
+
+	return normals;
 }
 
 bool Polygon::cyrusBeck(std::vector<Polygon> polygons) 
 {
-	for (auto p = polygons.begin(); p != polygons.end(); ++p)
-	{
-		int counter = 0;
-		auto points = p->getPoints();
-
-		std::cout << "size : " << points.size() << std::endl;
-		for (auto point = points.begin(); point != points.end(); ++point)
-		{
-			if (pointIsInsidePolygon(*point))
-			{
-				counter++;
-			}
-		}
-		std::cout << counter << std::endl;
-	}
+	std::vector<Point> normals = this->getNormals();
 	return true;
 }
 
