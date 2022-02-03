@@ -1,0 +1,23 @@
+﻿  Hogdmann.cpp
+  main.cpp
+  MainProgram.cpp
+  Mouse.cpp
+  Polygon.cpp
+C:\projets\scolaire\43DJV\Maths\Paint\Paint\Polygon.cpp(7,40): warning C4267: 'argument' : conversion de 'size_t' en 'const int', perte possible de données
+  Génération de code en cours...
+main.obj : error LNK2019: symbole externe non résolu __imp_glutInitDisplayMode référencé dans la fonction main
+main.obj : error LNK2019: symbole externe non résolu __imp_glutInitWindowPosition référencé dans la fonction main
+main.obj : error LNK2019: symbole externe non résolu __imp_glutInitWindowSize référencé dans la fonction main
+main.obj : error LNK2019: symbole externe non résolu __imp_glutMainLoop référencé dans la fonction main
+main.obj : error LNK2019: symbole externe non résolu __imp___glutCreateWindowWithExit référencé dans la fonction glutCreateWindow_ATEXIT_HACK
+main.obj : error LNK2019: symbole externe non résolu __imp_glutPostRedisplay référencé dans la fonction "void __cdecl display(void)" (?display@@YAXXZ)
+main.obj : error LNK2019: symbole externe non résolu __imp_glutSwapBuffers référencé dans la fonction "void __cdecl display(void)" (?display@@YAXXZ)
+main.obj : error LNK2019: symbole externe non résolu __imp___glutCreateMenuWithExit référencé dans la fonction glutCreateMenu_ATEXIT_HACK
+main.obj : error LNK2019: symbole externe non résolu __imp_glutAddMenuEntry référencé dans la fonction "void __cdecl createGLUTMenus(void)" (?createGLUTMenus@@YAXXZ)
+main.obj : error LNK2019: symbole externe non résolu __imp_glutAttachMenu référencé dans la fonction "void __cdecl createGLUTMenus(void)" (?createGLUTMenus@@YAXXZ)
+main.obj : error LNK2019: symbole externe non résolu __imp_glutDisplayFunc référencé dans la fonction main
+main.obj : error LNK2019: symbole externe non résolu __imp_glutMouseFunc référencé dans la fonction main
+main.obj : error LNK2019: symbole externe non résolu __imp_glutMotionFunc référencé dans la fonction main
+main.obj : error LNK2019: symbole externe non résolu __imp_glutPassiveMotionFunc référencé dans la fonction main
+..\libs\Glut\\glut32.lib : warning LNK4272: type d'ordinateur bibliothèque 'x86' en conflit avec le type d'ordinateur cible 'x64'
+C:\projets\scolaire\43DJV\Maths\Paint\x64\Debug\Paint.exe : fatal error LNK1120: 14 externes non résolus

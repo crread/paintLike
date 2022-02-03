@@ -37,7 +37,8 @@ public:
 	std::vector<Point> getPoints() const;
 	bool pointIsEmpty() const;
 	bool addPoint(int x, int y);
-	bool cyrusBeck(std::vector<Polygon> polygons);
+	bool cyrusBeck();
+	//bool cyrusBeck(std::vector<Polygon> polygons);
 };
 
 #endif

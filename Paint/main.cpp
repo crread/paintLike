@@ -65,9 +65,6 @@ void display()
     // Given the coordinates
     gluOrtho2D(0.f, 500.f, 0.f, 300.f);
 
-    //std::cout << "polygons " << mainProgram.polygons.size()  << std::endl;
-    //std::cout << "windows " << mainProgram.windows.size() << std::endl;
-
     if (!mainProgram.polygons.empty())
     {
         mainProgram.drawPolygons(mainProgram.polygons);

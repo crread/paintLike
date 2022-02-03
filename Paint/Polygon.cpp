@@ -28,57 +28,63 @@ int Polygon::getOrientation() const
 	int orientation = 0;
 	int i = 0;	
 
-	do 
-	{
-
-		if (i >= pointsSize) 
+	if (pointsSize >= 3) {
+		do
 		{
-			return 0;
-		}
 
-		orientation = (points.at(pointsSize % i + 1)._x * points.at(pointsSize %  i + 2)._y + points.at(i)._x * points.at(pointsSize % i + 2)._y + points.at(pointsSize % i + 2)._x * points.at(pointsSize % i)._y) - (points.at(pointsSize % i + 1)._x * points.at(i)._y + points.at(pointsSize % i + 2)._x * points.at(pointsSize % i + 1)._y + points.at(i)._x * points.at(pointsSize % i + 2)._y);
+			if (i >= pointsSize)
+			{
+				return 0;
+			}
 
-		i++;
+			orientation = (points.at((i + 1) % pointsSize)._x * points.at((i + 2) % pointsSize)._y + points.at(i)._x * points.at((i + 2) % pointsSize)._y + points.at((i + 2) % pointsSize)._x * points.at(i)._y) - (points.at((i + 1) % pointsSize)._x * points.at(i)._y + points.at((i + 2) % pointsSize)._x * points.at((i + 1) % pointsSize)._y + points.at(i)._x * points.at((i + 2) % pointsSize)._y);
 
-	} while (orientation == 0);
+			i++;
 
-	// orientation < 0 => clockwise orientation
-	// orientation > 0 => counterclockwise orientation
+		} while (orientation == 0);
 
-	return orientation < 0 ? -1 : 1;
+		// orientation < 0 => clockwise orientation
+		// orientation > 0 => counterclockwise orientation
+
+		return orientation < 0 ? -1 : 1;
+	}
+
+	return 0;
 }
 
 std::vector<Point> Polygon::getNormals() const
 {
 	auto pointsSize = points.size();
 	int orientation = this->getOrientation();
+	std::cout << orientation << std::endl;
 	std::vector<Point> normals;
 
-	if (orientation != 0) {
+	//if (orientation != 0) {
 
-		for (int i = 0; i < pointsSize; i++)
-		{
-			if (orientation == -1) 
-			{
-				normals.push_back(Point(
-					points.at(pointsSize % i + 1)._y - points.at(i)._y,
-					-1 * (points.at(pointsSize % i + 1)._x - points.at(i)._x)
-				));
-			}
-			else 
-			{
-				normals.push_back(Point(
-					-1 * (points.at(pointsSize % i + 1)._y - points.at(i)._y),
-					points.at(pointsSize % i + 1)._x - points.at(i)._x
-				));
-			}
-		}
-	}
+	//	for (int i = 0; i < pointsSize; i++)
+	//	{
+	//		if (orientation == -1) 
+	//		{
+	//			normals.push_back(Point(
+	//				points.at(pointsSize % i + 1)._y - points.at(i)._y,
+	//				-1 * (points.at(pointsSize % i + 1)._x - points.at(i)._x)
+	//			));
+	//		}
+	//		else 
+	//		{
+	//			normals.push_back(Point(
+	//				-1 * (points.at(pointsSize % i + 1)._y - points.at(i)._y),
+	//				points.at(pointsSize % i + 1)._x - points.at(i)._x
+	//			));
+	//		}
+	//	}
+	//}
 
 	return normals;
 }
 
-bool Polygon::cyrusBeck(std::vector<Polygon> polygons) 
+bool Polygon::cyrusBeck()
+//bool Polygon::cyrusBeck(std::vector<Polygon> polygons) 
 {
 	std::vector<Point> normals = this->getNormals();
 	return true;
